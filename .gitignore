@@ -18,6 +18,7 @@ Debug
 Release
 bin-int
 bin
+bin-intDebug-windows-x86_64
 *.suo
 *.csproj.user
 *.vbproj.user
