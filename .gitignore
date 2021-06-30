@@ -24,3 +24,4 @@ bin-intDebug-windows-x86_64
 *.vbproj.user
 ipch
 *sdf
+.vs

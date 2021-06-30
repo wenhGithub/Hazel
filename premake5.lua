@@ -8,9 +8,16 @@ workspace "Hazel"
 		"Dist"
 	}
 
-	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-startproject "Sandbox"
+-- Include duirectories relative to root folder (solution directory) 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include" 
+
+--11:46 of Windows Abstraction and GLFW : include the GLFW file, set the includeDir and links   
+include "Hazel/vendor/GLFW"
+
+--startproject "Sandbox"
 
 project "Hazel" 
 	location "Hazel" 
@@ -32,7 +39,14 @@ project "Hazel"
 	includedirs 
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include" 
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+	
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows" 
