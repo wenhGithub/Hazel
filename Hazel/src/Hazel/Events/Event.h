@@ -3,6 +3,8 @@
 #include "Hazel/Core.h"
 
 namespace Hazel {
+	
+	
 	// Events in Hazel are currently blocking, meaning when an event occurs it
 	// immediately gets dispatched and must be default with right then an there. 
 	// for the future, a better strategy might be to buffer events in an event
@@ -35,8 +37,9 @@ namespace Hazel {
 
 	class HAZEL_API Event
 	{
-		friend class EventDispatcher;
 	public:
+		bool Handled = false; 
+
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
@@ -46,10 +49,7 @@ namespace Hazel {
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handled = false;
 	};
-
 	//Dispatch by type 
 	class EventDispatcher
 	{
@@ -57,14 +57,16 @@ namespace Hazel {
 		using EventFn = std::function<bool(T&)>;
 	public:
 		EventDispatcher(Event& event)
-			: m_Event(event) {}
+			: m_Event(event) 
+		{
+		}
 
 		template<typename T>
 		bool Dispatch(EventFn<T> func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(*(T*)&m_Event);
 				return true;
 			}
 			return false;

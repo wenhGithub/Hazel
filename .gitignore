@@ -22,6 +22,12 @@ bin-intDebug-windows-x86_64
 *.suo
 *.csproj.user
 *.vbproj.user
+*.VC.db
+*.VC.db-shm
+*.VC.db-wal
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
 ipch
 *sdf
-.vs
